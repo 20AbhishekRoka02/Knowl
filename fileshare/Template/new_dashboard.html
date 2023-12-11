@@ -1,0 +1,71 @@
+
+{% extends "user_page_base.html" %}
+{% block username %}{{name}}{% endblock username %}
+{% block pagecontent %}
+<div id="content" class="p-4 p-md-5 pt-5">
+    <h1>Upload files here</h1>
+    <!-- upload section -->
+    <form action="{% url 'upload' %}" method="post" class="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="upload-div">
+            <input type="file" name="files" id="select-files" class="upload-input" multiple onchange="listFiles(this)" required>
+        </div>
+        <div>
+            <div style="overflow-y: scroll; border: 1px solid black; height: 60vh;" id="uploaing-files-list">                    
+            </div>
+        </div>
+        <button type="submit">Upload</button>
+    </form>
+
+    <!-- Uploading file section -->
+
+    <!-- Uploaded files list -->
+    <div>
+        <h1>Uploaded files history</h1>
+        <div style="overflow-y: scroll; border: 1px solid black; height: 60vh;">
+            {% for file in files %}
+                <div class="uploaded-file-element">
+                    <p>{{file.name}}</p>
+                    <p><span>File Size</span> {{file.size}}</p>
+                    <p><span>Uploaded on:</span> {{file.upload_date}} </p>
+                </div>
+            
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+</div>
+{% endblock pagecontent %}
+
+{% block JSScripts %}
+<script>
+    function formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    function listFiles(params) {
+        // console.log(params.files)
+        let uploading_elements=``;
+        for (const iterator of params.files) {
+            uploading_elements += `<div class="uploading-file-element" >
+                        <p>${iterator.name}</p>
+                        <p><span>File Size</span> ${formatBytes(iterator.size)}</p>
+                    </div>`          
+        }
+        document.getElementById("uploaing-files-list").innerHTML="";
+        document.getElementById("uploaing-files-list").innerHTML=uploading_elements;
+        
+    }
+
+</script>
+{% endblock JSScripts %}

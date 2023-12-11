@@ -1,0 +1,22 @@
+{% extends "user_page_base.html" %}
+{% block username %}{{name}}{% endblock username %}
+{% block pagecontent %}
+
+<!-- Uploaded files list -->
+<div>
+    <h1>Upload files </h1>
+    <div style="overflow-y: scroll; border: 1px solid black; height: 60vh;">
+        {% for file in received %}
+            <div class="uploaded-file-element">
+                <p>File Share ID: {{file.shareid}}</p>
+                <p><span>Sender Name: </span> {{file.sender}}</p>
+                <p><span>File Name:</span> {{file.file}} </p>
+                <p><span>Timestamp:</span> {{file.timestamp}} </p>
+            </div>
+        
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock pagecontent %}
+{% block JSScripts %}{% endblock JSScripts %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}FileShare | Dashboard{% endblock title %}
+{% block pageneeds %}
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+{% endblock pageneeds %}
+{% block styles %}
+<style>
+    .upload-input {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .upload-input:hover {
+        background-color: rgb(238, 238, 238);
+    }
+
+    .upload-div {
+        border: 5px dashed rgb(190, 190, 190);
+        width: 95%;
+        height: 40vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .uploaded-file-element, .uploading-file-element {
+        border: 1px solid black;
+        cursor: pointer;
+
+    }
+
+    .uploaded-file-element:hover, .uploading-file-element:hover {
+        background-color: antiquewhite;
+
+    }
+    h1{
+        text-align: center;
+    }
+</style>
+{% endblock styles %}
+{% block morestyles %}{% endblock morestyles %}
+
+{% block content %}
+<section>
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar">
+            <div class="custom-menu">
+                <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                </button>
+            </div>
+            <div class="img bg-wrap text-center py-4"
+                style="background-image: url({% static 'dashboard/images/bg_1.jpg' %});">
+                <div class="user-logo">
+                    <div class="img" style="background-image: url({% static 'dashboard/images/logo.jpg' %});"></div>
+                    <h3>{% block username %}{% endblock username %}</h3>
+                </div>
+            </div>
+            <ul class="list-unstyled components mb-5">
+                <li class="active">
+                    <a href="{% url 'index' %}"><span class="fa fa-home mr-3"></span> Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'share' %}"><span class="fa fa-download mr-3 notif"><small
+                                class="d-flex align-items-center justify-content-center">5</small></span> Sharing</a>
+                </li>
+                <li>
+                    <a href="{% url 'search' %}"><span class="fa fa-gift mr-3"></span> Search Peers</a>
+                </li>
+                <li>
+                    <a href="{% url 'filesupload' %}"><span class="fa fa-trophy mr-3"></span> uploaded files</a>
+                </li>
+                {% comment %} <li>
+                    <a href="#"><span class="fa fa-cog mr-3"></span> Settings</a>
+                </li>
+                <li>
+                    <a href="#"><span class="fa fa-support mr-3"></span> Support</a>
+                </li> {% endcomment %}
+                <li>
+                    <form action="{% url 'logout' %}" method="post" hidden>
+                        {% csrf_token %}
+                        <input id="submit-btn" type="submit" value="" hidden>
+                    </form>
+                    <a>
+                        <label for="submit-btn">
+
+                            <span class="fa fa-sign-out mr-3"></span>
+                            Log Out
+                        </label>
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+
+
+
+
+        <!-- Page Content  -->
+        {% block pagecontent %}{% endblock pagecontent %}
+    </div>
+
+</section>
+{% endblock content %}
+{% block pagescripts %}
+<script src="{% static 'dashboard/js/jquery.min.js' %}"></script>
+<script src="{% static 'dashboard/js/popper.js' %}"></script>
+<script src="{% static 'dashboard/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dashboard/js/main.js' %}"></script>
+{% block JSScripts %}{% endblock JSScripts %}
+{% endblock pagescripts %}

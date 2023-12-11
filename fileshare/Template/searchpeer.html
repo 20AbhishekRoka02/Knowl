@@ -1,0 +1,44 @@
+{% extends "user_page_base.html" %}
+{% block username %}{{name}}{% endblock username %}
+{% block pagecontent %}
+<div>
+    <!-- Search div -->
+    <div>
+        <h1>Search Peers</h1>
+        <div>
+            <form action="{% url 'search' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="username" id="" placeholder="Search your peer">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        {% comment %} Search Result Div {% endcomment %}
+        {% if result %}
+        <div>
+            <div style="overflow-y: scroll; border: 1px solid black; height: 60vh;">
+                {% for user in usersdata %}
+                    <div class="uploaded-file-element" onclick="copyToClipboard('{{user.id}}')">
+                        <p>{{user.id}}</p>
+                        <p>{{user.name}}</p>
+                        <p><span>Uploaded</span> {{user.uploaded}} </p>
+                    </div>
+                
+                {% endfor %}
+    
+            </div>
+        </div>
+        
+        {% endif %}
+    </div>
+
+    
+</div>
+{% endblock pagecontent %}
+{% block JSScripts %}
+<script>
+    function copyToClipboard(id) {
+        navigator.clipboard.writeText(id);
+        alert("Unique ID copied to clipboard.");        
+    }
+</script>
+{% endblock JSScripts %}

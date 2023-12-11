@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}The Nomad Hacker | Auth page{% endblock title %}
+{% block pageneeds %}
+<link rel="stylesheet" href="{% static "form-style.css" %}">
+{% endblock pageneeds %}
+{% block content %}
+<div class="container">
+    <input type="checkbox" id="check">
+    <div class="login form">
+      <header>Login</header>
+      <form action="{% url "login" %}" method="post" id="login">
+        {% csrf_token %}
+        <input name="email" id='login-email' type="email" placeholder="Enter your email" required>
+        <input name="password" id='login-password' type="password" placeholder="Enter your password" required>
+        <a href="mailto:then0madhacker@gmail.com" >Forgot password?</a>
+        <input type="Submit" class="button" value="Login">
+      </form>
+      <div class="signup">
+        <span class="signup">Don't have an account?
+         <label for="check">Signup</label>
+        </span>
+      </div>
+    </div>
+    <div class="registration form">
+      <header>Signup</header>
+      <form action="{% url "signup" %}" method="post" id="signup">
+        {% csrf_token %}
+        <input id="signup-name" name="name" type="text" placeholder="Enter your name" required>
+        <input id="signup-email" name="email" type="email" placeholder="Enter your email" required>
+        <input id="signup-phone" name="phone" type="text" placeholder="Enter your phone number" required>
+        <input id="signup-pass"  name="password" type="password" placeholder="Create a password" required>
+        {% comment %} <input id="signup-cnfpass"  type="password" placeholder="Confirm your password" > {% endcomment %}
+        <input id="signup-submit" type="Submit" class="button" value="Signup">
+      </form>
+      <div class="signup">
+        <span class="signup">Already have an account?
+         <label for="check">Login</label>
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock content %}

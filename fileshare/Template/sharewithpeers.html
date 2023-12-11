@@ -1,0 +1,65 @@
+{% extends "user_page_base.html" %}
+{% block username %}
+{{name}}
+{% endblock username %}
+{% block pagecontent %}
+
+<div>
+    <h1>Share With Peers</h1>
+    <div>
+        <form action="{% url 'share' %}" method="post">
+            {% csrf_token %}
+            <!-- <textarea name="" id="" cols="30" rows="10"></textarea> -->
+            <input type="text" name="checked_names" id="checked_names" value=""  hidden>
+            <input type="text" name="peerID" id="" placeholder="Enter your Peer ID" required>
+
+            <div style="overflow-y: scroll; border: 1px solid black; height: 60vh;">
+                {% for file in availablefiles %}
+                <div>
+                    <div class="uploaded-file-element">
+                        <input type="checkbox" name="files" id="{{file.filename}}" value="{{file.filename}}" onchange="selectedFiles()">
+                        <label for="{{file.filename}}" style="width: 94%; height: 100%;">
+                            {{file.filename}}
+                        </label>
+                    </div>
+                </div>                
+                {% endfor %}
+                
+
+            </div>
+            <div>
+                <button type="submit">Share</button>
+            </div>
+            
+
+        </form>
+        <div>
+            <h2>You have selected following files:</h2>
+            <div id="selected-files">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock pagecontent %}
+{% block JSScripts %}
+<script>
+    function selectedFiles() {
+        let select = document.getElementsByName("files");
+        let files_selected = [];
+        for (const iterator of select) {
+            if (iterator.checked){
+                files_selected.push(iterator.value);
+            }            
+        }
+        
+        files_paras=``;
+        for (const file of files_selected) {
+            files_paras+=`<p>${file}</p>`
+        }
+        document.getElementById("checked_names").value = files_selected.join(',');
+        document.getElementById("selected-files").innerHTML = files_paras
+        
+    }
+</script>
+{% endblock JSScripts %}
